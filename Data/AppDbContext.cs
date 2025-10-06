@@ -10,6 +10,8 @@ namespace EventManagment.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Ticket> Tickets => Set<Ticket>();
+        public DbSet<Event> Events => Set<Event>();
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,6 +27,13 @@ namespace EventManagment.Data
                     )
                     .HasMaxLength(500); // Longitud máxima para el campo en la BD
             });
+
+            modelBuilder.Entity<Event>(e =>
+            {
+                e.HasKey(x => x.Id);
+                e.Property(x => x.Title).IsRequired().HasMaxLength(100);
+            });
+
         }
     }
 }
