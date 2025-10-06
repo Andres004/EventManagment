@@ -13,31 +13,32 @@ namespace EventManagment.Repositories
             _context = context;
         }
 
-        public async Task<List<Event>> GetAllAsync() => await _context.Events.ToListAsync();
-
-        public async Task<Event?> GetByIdAsync(Guid id) => await _context.Events.FindAsync(id);
-
-        public async Task AddAsync(Event e)
+        public async Task<Event> CreateAsync(Event eventObj)
         {
-            _context.Events.Add(e);
+            _context.Set<Event>().Add(eventObj);
             await _context.SaveChangesAsync();
+            return eventObj;
         }
 
-        public async Task UpdateAsync(Event e)
+        public async Task<Event?> GetByIdAsync(Guid id)
         {
-            _context.Events.Update(e);
-            await _context.SaveChangesAsync();
+            return await _context.Set<Event>().FindAsync(id);
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task<IEnumerable<Event>> GetAllAsync()
         {
-            var ev = await _context.Events.FindAsync(id);
-            if (ev != null)
-            {
-                _context.Events.Remove(ev);
-                await _context.SaveChangesAsync();
-            }
+            return await _context.Set<Event>().ToListAsync();
+        }
+
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            var eventObj = await _context.Set<Event>().FindAsync(id);
+            if (eventObj == null)
+                return false;
+
+            _context.Set<Event>().Remove(eventObj);
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }
-
