@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventManagment.Repositories
 {
-    public class EventRepository
+    public class EventRepository : IEventRepository
     {
         private readonly AppDbContext _context;
 
@@ -40,3 +40,4 @@ namespace EventManagment.Repositories
         }
     }
 }
+

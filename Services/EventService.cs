@@ -3,7 +3,7 @@ using EventManagment.Repositories;
 
 namespace EventManagment.Services
 {
-    public class EventService
+    public class EventService : IEventService
     {
         private readonly EventRepository _repository;
 
